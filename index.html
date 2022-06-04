@@ -9,7 +9,23 @@
 
 </head>
 <body>
-	<main id="app" class="container-fluid">
+	<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Chordial</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main id="app" class="container-fluid border-top border-light">
 		<div class="row">
 
 			<!-- Lyric Data -->
@@ -40,7 +56,7 @@
 							<div class="col-sm-3">
 								<div class="d-flex flex-row justify-content-end">
 									<button title="Delete Section" type="button" class="btn btn-sm btn-danger" v-on:click="removeSection(sectionIndex)">
-										<i icon-name="x"></i>
+										<i icon-name="trash"></i>
 									</button>
 								</div>
 							</div>
@@ -50,7 +66,7 @@
 							<div class="d-flex flex-row align-items-center justify-content-between mb-2">
 								<small>Line</small>
 								<button title="Delete Line" type="button" class="btn btn-sm btn-danger" v-on:click="removeLine(sectionIndex, lineIndex)">
-									<i icon-name="x"></i>
+									<i icon-name="trash"></i>
 								</button>
 							</div>
 							<div v-for="(lyric, lyricIndex) in line" class="row mb-1">
@@ -61,7 +77,7 @@
 									<div class="input-group">
 										<input class="form-control form-control-sm" type="text" placeholder="lyric" v-model="lyric.text">
 										<button title="Delete Lyric" type="button" class="btn btn-sm btn-danger" v-on:click="removeLyric(sectionIndex, lineIndex, lyricIndex)">
-											<i icon-name="x"></i>
+											<i icon-name="trash"></i>
 										</button>
 									</div>
 								</div>
