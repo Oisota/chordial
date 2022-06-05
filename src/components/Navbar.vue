@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -11,7 +12,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Home</a>
+						<RouterLink v-bind:to="{name: 'home'}" class="nav-link" active-class="active">Home</RouterLink>
 					</li>
 				</ul>
 			</div>

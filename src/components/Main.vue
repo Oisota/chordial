@@ -78,7 +78,6 @@ function removeLyric(sectionIndex: number, lineIndex: number, lyricIndex: number
 </script>
 
 <template>
-<div class="container-fluid border-top border-light">
 	<div class="row">
 		<!-- Lyric Data -->
 		<div class="col-xl-6 border-end border-secondary py-2 d-print-none bg-dark">
@@ -166,7 +165,6 @@ function removeLyric(sectionIndex: number, lineIndex: number, lyricIndex: number
 		</div>
 
 	</div>
-</div>
 </template>
 
 <style scoped>
