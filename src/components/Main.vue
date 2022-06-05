@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
 import { Plus, Trash } from 'lucide-vue-next';
+import Preview from './Preview.vue';
+import { Section } from '../types';
 
 const songTitle = ref('Proud Mary');
 const artistName = ref('Creedence Clearwater Revival');
-const sections: Ref<Array<any>> = ref([
+const sections: Ref<Array<Section>> = ref([
 	{
 		title: 'Verse 1',
 		lines: [
@@ -44,9 +46,6 @@ const sections: Ref<Array<any>> = ref([
 		],
 	},
 ]);
-function handlePrint() {
-	window.print();
-}
 function addSection() {
 	sections.value.push({
 		title: '',
@@ -163,23 +162,7 @@ function removeLyric(sectionIndex: number, lineIndex: number, lyricIndex: number
 
 		<!-- Preview -->
 		<div class="col-xl-6 pt-2">
-			<div class="d-flex flex-row justify-content-end d-print-none">
-				<button v-on:click="handlePrint" type="button" class="btn btn-sm btn-primary">Print</button>
-			</div>
-			<div class="d-flex flex-column align-items-center mb-2">
-				<h3 class="mb-0">{{songTitle}}</h3>
-				<span class="fs-5">{{artistName}}</span>
-			</div>
-
-			<div v-for="section in sections" class="pb-2">
-				<div v-if="section.title" class="fw-bold">{{ section.title }}</div>
-				<div v-for="line in section.lines" class="d-flex flex-row pb-2">
-					<span v-for="lyric in line" class="d-flex flex-column pe-2">
-						<span class="fw-bold">{{lyric.chord}}</span>
-						<span>{{lyric.text}}</span>
-					</span>
-				</div>
-			</div>
+			<Preview v-bind:songTitle="songTitle" v-bind:artistName="artistName" v-bind:sections="sections" />
 		</div>
 
 	</div>
