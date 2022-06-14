@@ -1,6 +1,9 @@
+import { PouchDocType } from './db'
 export interface Song {
-	songTitle: string
-	artistName: string
+	_id: string
+	title: string
+	artist: string
+	type: PouchDocType
 	sections: Array<Section>
 }
 

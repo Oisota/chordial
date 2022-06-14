@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Main from './components/Main.vue';
+import AllSongs from './components/AllSongs.vue';
 
 const routes = [
-	{ name: 'home', path: '/', component: Main },
+	{ name: 'home', path: '/', component: AllSongs },
+	{ name: 'edit', path: '/edit', component: Main },
 ];
 
 const router = createRouter({

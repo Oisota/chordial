@@ -31,7 +31,7 @@ const song = useSongStore();
 				</div>
 				<div class="col-sm-3">
 					<div class="d-flex flex-row justify-content-end">
-						<button title="Delete Section" type="button" class="btn btn-sm btn-danger" v-on:click="song.removeSection(sectionIndex)">
+						<button title="Delete Section" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeSection(sectionIndex)">
 							<Trash size="16"/>
 						</button>
 					</div>
@@ -41,7 +41,7 @@ const song = useSongStore();
 			<div v-for="(line, lineIndex) in section.lines" class="p-2 border-top border-dark bg-secondary">
 				<div class="d-flex flex-row align-items-center justify-content-between mb-2">
 					<small>Line</small>
-					<button title="Delete Line" type="button" class="btn btn-sm btn-danger" v-on:click="song.removeLine(sectionIndex, lineIndex)">
+					<button title="Delete Line" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeLine(sectionIndex, lineIndex)">
 						<Trash size="16"/>
 					</button>
 				</div>
@@ -52,7 +52,7 @@ const song = useSongStore();
 					<div class="col-sm-10">
 						<div class="input-group">
 							<input class="form-control form-control-sm" type="text" placeholder="lyric" v-model="lyric.text">
-							<button title="Delete Lyric" type="button" class="btn btn-sm btn-danger" v-on:click="song.removeLyric(sectionIndex, lineIndex, lyricIndex)">
+							<button title="Delete Lyric" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeLyric(sectionIndex, lineIndex, lyricIndex)">
 								<Trash size="16"/>
 							</button>
 						</div>
