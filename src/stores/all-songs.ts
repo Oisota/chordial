@@ -14,11 +14,16 @@ export const useSongsStore = defineStore('song', {
 					type: PouchDocType.SONG,
 				},
 			});
-			this.songs = (result.docs as unknown as Array<Song>);
+			(this.songs as Array<Song>) = (result.docs as unknown as Array<Song>);
 		},
 		async add(song: Song) {
 			this.songs.push(song);
 			await db.put(song);
 		},
+		async remove(song: Song) {
+			const doc = await db.get(song._id);
+			await db.remove(doc);
+			return this.load();
+		}
 	}
 });

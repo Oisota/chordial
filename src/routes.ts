@@ -4,7 +4,7 @@ import AllSongs from './components/AllSongs.vue';
 
 const routes = [
 	{ name: 'home', path: '/', component: AllSongs },
-	{ name: 'edit', path: '/edit', component: Main },
+	{ name: 'edit', path: '/edit/:uuid', component: Main },
 ];
 
 const router = createRouter({

@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { onBeforeMount } from 'vue';
 import { useSongStore } from '../stores/song';
 
+const props = defineProps(['uuid'])
+
+console.log(`Song UUID = ${props.uuid}`);
 const song = useSongStore();
+
+onBeforeMount(() => {
+	song.load(props.uuid);
+});
 
 function handlePrint() {
 	window.print();

@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import db from '../db';
+import { Song } from '../types';
 
 export const useSongStore = defineStore('song', {
 	state: () => ({
@@ -46,6 +48,13 @@ export const useSongStore = defineStore('song', {
 		]
 	}),
 	actions: {
+		async load(uuid: string) {
+			const song = await db.get<Song>(uuid);
+			console.log(song);
+			this.title = song.title;
+			this.artist = song.artist;
+			this.sections = song.sections;
+		},
 		addSection() {
 			this.sections.push({
 				title: '',

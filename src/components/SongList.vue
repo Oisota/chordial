@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useSongsStore } from '../stores/all-songs';
-import { Pencil, Plus } from 'lucide-vue-next';
+import { Pencil, Plus, Trash } from 'lucide-vue-next';
 import { Song } from '../types';
 import { PouchDocType } from '../db';
 import { v4 as uuid4 } from 'uuid';
 
 const songs = useSongsStore();
-songs.load();
 const newSongInput = ref(null);
 const songName = ref('');
+
+onBeforeMount(() => {
+	songs.load();
+});
 
 function add() {
 	if (!songName.value) {
@@ -25,8 +28,8 @@ function add() {
 	songs.add(song);
 	songName.value = '';
 }
-
-function edit(index: number) {
+function remove(song: Song) {
+	songs.remove(song);
 }
 </script>
 
@@ -38,11 +41,16 @@ function edit(index: number) {
 				<Plus size="16"/>
 			</button>
 		</li>
-		<li v-for="(song, index) in songs.songs" class="list-group-item d-flex flex-row justify-content-between align-items-center">
+		<li v-for="song in songs.songs" class="list-group-item d-flex flex-row justify-content-between align-items-center">
 			<span>{{song.title}}</span>
-			<button type="button" class="btn btn-warning" v-on:click="edit(index)">
-				<Pencil size="16"/>
-			</button>
+			<div class="btn-group">
+				<button type="button" class="btn btn-danger" v-on:click="remove(song)">
+					<Trash size="15"></Trash>
+				</button>
+				<router-link class="btn btn-warning" :to="{name: 'edit', params: {uuid: song._id}}">
+					<Pencil size="16"/>
+				</router-link>
+			</div>
 		</li>
 	</ul>
 </template>
