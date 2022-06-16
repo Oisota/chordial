@@ -6,7 +6,6 @@ import SongInput from '../components/SongInput.vue';
 
 const route = useRoute();
 const uuid = ref(route.params.uuid);
-console.log(`Route UUID = ${uuid.value}`)
 </script>
 
 <template>

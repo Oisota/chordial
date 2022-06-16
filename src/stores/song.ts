@@ -50,7 +50,6 @@ export const useSongStore = defineStore('song', {
 	actions: {
 		async load(uuid: string) {
 			const song = await db.get<Song>(uuid);
-			console.log(song);
 			this.title = song.title;
 			this.artist = song.artist;
 			this.sections = song.sections;

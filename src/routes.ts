@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Main from './pages/Main.vue';
-import AllSongs from './pages/AllSongs.vue';
+import Edit from './pages/Edit.vue';
+import Home from './pages/Home.vue';
 
 const routes = [
-	{ name: 'home', path: '/', component: AllSongs },
-	{ name: 'edit', path: '/edit/:uuid', component: Main },
+	{ name: 'home', path: '/', component: Home },
+	{ name: 'edit', path: '/edit/:uuid', component: Edit },
 ];
 
 const router = createRouter({
