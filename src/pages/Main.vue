@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import Preview from './Preview.vue';
-import SongInput from './SongInput.vue';
+import Preview from '../components/Preview.vue';
+import SongInput from '../components/SongInput.vue';
 
 const route = useRoute();
 const uuid = ref(route.params.uuid);

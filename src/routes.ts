@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Main from './components/Main.vue';
-import AllSongs from './components/AllSongs.vue';
+import Main from './pages/Main.vue';
+import AllSongs from './pages/AllSongs.vue';
 
 const routes = [
 	{ name: 'home', path: '/', component: AllSongs },
