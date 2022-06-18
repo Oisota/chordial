@@ -1,58 +1,32 @@
 import { defineStore } from 'pinia';
 import db from '../db';
 import { Song } from '../types';
+import { PouchDocType } from '../db';
 
 export const useSongStore = defineStore('song', {
 	state: () => ({
-		title: 'Proud Mary',
-		artist: 'Creedence Clearwater Revival',
-		sections: [
-			{
-				title: 'Verse 1',
-				lines: [
-					[
-						{chord: 'D', text: 'Left a good job in the city,'},
-						{chord: 'D', text: 'Workin for the man every night and day.'},
-					],
-					[
-						{chord: 'D', text: 'And I never lost a minute of sleepin,'},
-						{chord: 'D', text: 'Worrying bout the way things might have been.'},
-					],
-				],
-			},
-			{
-				title: 'Chorus',
-				lines: [
-					[
-						{chord: 'A', text: 'Big wheel will keep on turnin'},
-						{chord: 'Bm', text: 'Proud Mary keep on burnin'},
-					],
-					[
-						{chord: 'D', text: 'Rollin, rollin, rollin on a river'},
-					]
-				]
-			},
-			{
-				title: 'Verse 2',
-				lines: [
-					[
-						{chord: 'D', text: 'Cleaned a lot of plates in Memphis,'},
-						{chord: 'D', text: 'Pumped a lot of pain down in New Orleans'},
-					],
-					[
-						{chord: 'D', text: 'But I never saw the good side of the city,'},
-						{chord: 'D', text: 'Till I hitched a ride on a river boat queen.'},
-					],
-				],
-			},
-		]
+		_id: '',
+		type: PouchDocType.SONG,
+		title: '',
+		artist: '',
+		sections: []
 	}),
 	actions: {
 		async load(uuid: string) {
-			const song = await db.get<Song>(uuid);
+			let song = null;
+			try {
+				song = await db.get<Song>(uuid);
+			} catch (err) {
+				console.log('Song Load Error');
+				console.log(`UUID = ${uuid}`);
+				console.log(err);
+				return Promise.reject(err);
+			}
 			this.title = song.title;
 			this.artist = song.artist;
 			this.sections = song.sections;
+			this.type = song.type;
+			this._id = song._id;
 		},
 		addSection() {
 			this.sections.push({

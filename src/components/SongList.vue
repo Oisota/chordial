@@ -10,8 +10,8 @@ const songs = useSongsStore();
 const newSongInput = ref(null);
 const songName = ref('');
 
-onBeforeMount(() => {
-	songs.load();
+onBeforeMount(async () => {
+	return songs.load();
 });
 
 function add() {

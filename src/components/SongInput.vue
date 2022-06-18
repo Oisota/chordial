@@ -1,12 +1,21 @@
 <script setup lang="ts">
+import debounce from 'lodash/debounce'
 import { Plus, Trash } from 'lucide-vue-next';
-import { useSongStore } from '../stores/song';
+import { Song } from '../types';
 
-const song = useSongStore();
+const emit = defineEmits(['input']);
+
+const props = defineProps<{
+	song: Song
+}>();
+
+const input = debounce(() => {
+	emit('input');
+}, 500);
 </script>
 
 <template>
-	<form>
+	<form v-on:input="input">
 		<div class="bg-secondary text-light p-2 mb-3 rounded">
 			<div class="row mb-1">
 				<label class="col-sm-2 col-form-label col-form-label-sm" for="song-title">Song Title</label>

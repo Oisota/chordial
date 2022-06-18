@@ -4,10 +4,12 @@ import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-	<Navbar></Navbar>
-	<div class="container-fluid border-top border-light">
-		<RouterView></RouterView>
-	</div>
+	<main>
+		<Navbar></Navbar>
+		<div class="container-fluid border-top border-light">
+			<RouterView></RouterView>
+		</div>
+	</main>
 </template>
 
 <style>
