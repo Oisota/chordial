@@ -1,6 +1,7 @@
 import { PouchDocType } from './db'
 export interface Song {
 	_id: string
+	_rev: string
 	title: string
 	artist: string
 	type: PouchDocType

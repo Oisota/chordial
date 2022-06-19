@@ -13,8 +13,8 @@ onMounted(async () => {
 	await song.load(uuid);
 });
 
-function updateSong() {
-	console.log('Update Song');
+async function updateSong() {
+	song.update();
 }
 </script>
 

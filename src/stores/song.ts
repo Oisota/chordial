@@ -6,6 +6,7 @@ import { PouchDocType } from '../db';
 export const useSongStore = defineStore('song', {
 	state: () => ({
 		_id: '',
+		_rev: '',
 		type: PouchDocType.SONG,
 		title: '',
 		artist: '',
@@ -17,8 +18,6 @@ export const useSongStore = defineStore('song', {
 			try {
 				song = await db.get<Song>(uuid);
 			} catch (err) {
-				console.log('Song Load Error');
-				console.log(`UUID = ${uuid}`);
 				console.log(err);
 				return Promise.reject(err);
 			}
@@ -27,6 +26,23 @@ export const useSongStore = defineStore('song', {
 			this.sections = song.sections;
 			this.type = song.type;
 			this._id = song._id;
+			this._rev = song._rev;
+		},
+		async update() {
+			const song = {
+				_id: this._id,
+				_rev: this._rev,
+				type: this.type,
+				title: this.title,
+				artist: this.artist,
+				sections: this.sections,
+			};
+			try {
+				const result = await db.put(song);
+				this._rev = result.rev;
+			} catch (err) {
+				console.log(err);
+			}
 		},
 		addSection() {
 			this.sections.push({
