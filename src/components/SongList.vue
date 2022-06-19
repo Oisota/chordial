@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
-import { useSongsStore } from '../stores/all-songs';
+import { useRouter } from 'vue-router';
 import { Pencil, Plus, Trash } from 'lucide-vue-next';
-import { Song } from '../types';
-import { PouchDocType } from '../db';
 import { v4 as uuid4 } from 'uuid';
 
+import { useSongsStore } from '../stores/all-songs';
+import { Song } from '../types';
+import { PouchDocType } from '../db';
+
+const router = useRouter();
 const songs = useSongsStore();
 const newSongInput = ref(null);
 const songName = ref('');
@@ -31,17 +34,25 @@ function add() {
 function remove(song: Song) {
 	songs.remove(song);
 }
+function viewSong(song: Song) {
+	router.push({
+		name: 'view',
+		params: {
+			uuid: song._id,
+		}
+	});
+}
 </script>
 
 <template>
-	<ul class="list-group">
-		<li class="list-group-item d-flex flex-row justify-content-between align-items-center">
+	<div class="list-group">
+		<div class="list-group-item d-flex flex-row justify-content-between align-items-center">
 			<input class="form-control me-3" type="text" placeholder="Add New Song Name Here" v-model="songName" ref="newSongInput" v-on:keyup.enter="add">
 			<button type="button" class="btn btn-primary" v-on:click="add">
 				<Plus size="16"/>
 			</button>
-		</li>
-		<li v-for="song in songs.songs" class="list-group-item d-flex flex-row justify-content-between align-items-center">
+		</div>
+		<button v-for="song in songs.songs" type="button" v-on:click="viewSong(song)" class="list-group-item list-group-item-action d-flex flex-row justify-content-between align-items-center">
 			<span>{{song.title}}</span>
 			<div class="btn-group">
 				<button type="button" class="btn btn-danger" v-on:click="remove(song)">
@@ -51,8 +62,8 @@ function remove(song: Song) {
 					<Pencil size="16"/>
 				</router-link>
 			</div>
-		</li>
-	</ul>
+		</button>
+	</div>
 </template>
 
 <style scoped>
