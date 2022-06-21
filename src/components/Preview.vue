@@ -24,7 +24,8 @@ function handlePrint() {
 			<div v-if="section.title" class="fw-bold">{{ section.title }}</div>
 			<div v-for="line in section.lines" class="d-flex flex-row pb-2">
 				<span v-for="lyric in line" class="d-flex flex-column pe-2">
-					<span class="fw-bold">{{lyric.chord}}</span>
+					<span v-if="lyric.chord" class="fw-bold">{{lyric.chord}}</span>
+					<span v-else class="fw-bold">&nbsp;</span>
 					<span>{{lyric.text}}</span>
 				</span>
 			</div>
