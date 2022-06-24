@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { cloneDeep } from 'lodash';
+
 import db from '../db';
 import { Song } from '../types';
 import { PouchDocType } from '../db';
@@ -44,6 +46,8 @@ export const useSongStore = defineStore('song', {
 				console.log(err);
 			}
 		},
+
+		// section functions
 		addSection() {
 			this.sections.push({
 				title: '',
@@ -57,12 +61,56 @@ export const useSongStore = defineStore('song', {
 		removeSection(index: number) {
 			this.sections.splice(index, 1);
 		},
+		duplicateSection(index: number) {
+			const section = cloneDeep(this.sections[index]);
+			this.sections.splice(index, 0, section);
+		},
+		moveSectionUp(index: number) {
+			if (index === 0) {
+				return;
+			}
+			const section = this.sections[index];
+			this.sections[index] = this.sections[index - 1];
+			this.sections[index - 1] = section;
+		},
+		moveSectionDown(index: number) {
+			if (index + 1 >= this.sections.length) {
+				return;
+			}
+			const section = this.sections[index];
+			this.sections[index] = this.sections[index + 1];
+			this.sections[index + 1] = section;
+		},
+
+		// line functions
 		addLine(index: number) {
 			this.sections[index].lines.push([{chord: '', text: ''}]);
 		},
 		removeLine(sectionIndex: number, lineIndex: number) {
 			this.sections[sectionIndex].lines.splice(lineIndex, 1);
 		},
+		duplicateLine(sectionIndex: number, lineIndex: number) {
+			const line = this.sections[sectionIndex].lines[lineIndex];
+			this.sections[sectionIndex].lines.splice(lineIndex, 0, line.slice());
+		},
+		moveLineUp(sectionIndex: number, lineIndex: number) {
+			if (lineIndex === 0) {
+				return;
+			}
+			const line = this.sections[sectionIndex].lines[lineIndex];
+			this.sections[sectionIndex].lines[lineIndex] = this.sections[sectionIndex].lines[lineIndex - 1];
+			this.sections[sectionIndex].lines[lineIndex - 1] = line;
+		},
+		moveLineDown(sectionIndex: number, lineIndex: number) {
+			if (lineIndex + 1 >= this.sections[sectionIndex].lines.length) {
+				return;
+			}
+			const line = this.sections[sectionIndex].lines[lineIndex];
+			this.sections[sectionIndex].lines[lineIndex] = this.sections[sectionIndex].lines[lineIndex + 1];
+			this.sections[sectionIndex].lines[lineIndex + 1] = line;
+		},
+
+		// lyric functions
 		addLyric(sectionIndex: number, lineIndex: number) {
 			this.sections[sectionIndex]
 				.lines[lineIndex]
@@ -72,6 +120,26 @@ export const useSongStore = defineStore('song', {
 			this.sections[sectionIndex]
 				.lines[lineIndex]
 				.splice(lyricIndex, 1);
+		},
+		duplicateLyric(sectionIndex: number, lineIndex: number, lyricIndex: number) {
+			const lyric = this.sections[sectionIndex].lines[lineIndex][lyricIndex];
+			this.sections[sectionIndex].lines[lineIndex].splice(lyricIndex, 0, cloneDeep(lyric));
+		},
+		moveLyricUp(sectionIndex: number, lineIndex: number, lyricIndex: number) {
+			if (lyricIndex === 0) {
+				return;
+			}
+			const lyric = this.sections[sectionIndex].lines[lineIndex][lyricIndex];
+			this.sections[sectionIndex].lines[lineIndex][lyricIndex] = this.sections[sectionIndex].lines[lineIndex][lyricIndex - 1];
+			this.sections[sectionIndex].lines[lineIndex][lyricIndex - 1] = lyric;
+		},
+		moveLyricDown(sectionIndex: number, lineIndex: number, lyricIndex: number) {
+			if (lyricIndex + 1 >= this.sections[sectionIndex].lines[lineIndex].length) {
+				return;
+			}
+			const lyric = this.sections[sectionIndex].lines[lineIndex][lyricIndex];
+			this.sections[sectionIndex].lines[lineIndex][lyricIndex] = this.sections[sectionIndex].lines[lineIndex][lyricIndex + 1];
+			this.sections[sectionIndex].lines[lineIndex][lyricIndex + 1] = lyric;
 		},
 	}
 });

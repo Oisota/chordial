@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import debounce from 'lodash/debounce'
-import { Plus, Trash } from 'lucide-vue-next';
+import { Plus } from 'lucide-vue-next';
 import { Song } from '../types';
+import SongInputControls from './SongInputControls.vue'
 
 const emit = defineEmits(['input']);
 
@@ -40,9 +41,16 @@ const input = debounce(() => {
 				</div>
 				<div class="col-sm-3">
 					<div class="d-flex flex-row justify-content-end">
-						<button title="Delete Section" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeSection(sectionIndex)">
-							<Trash size="16"/>
-						</button>
+						<SongInputControls
+							up-title="Move Section Up"
+							down-title="Move Section Down"
+							copy-title="Duplicate Section"
+							delete-title="Remove Section"
+							v-on:up="song.moveSectionUp(sectionIndex)"
+							v-on:down="song.moveSectionDown(sectionIndex)"
+							v-on:copy="song.duplicateSection(sectionIndex)"
+							v-on:delete="song.removeSection(sectionIndex)"
+						></SongInputControls>
 					</div>
 				</div>
 			</div>
@@ -50,20 +58,34 @@ const input = debounce(() => {
 			<div v-for="(line, lineIndex) in section.lines" class="p-2 border-top border-dark bg-secondary">
 				<div class="d-flex flex-row align-items-center justify-content-between mb-2">
 					<small>Line</small>
-					<button title="Delete Line" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeLine(sectionIndex, lineIndex)">
-						<Trash size="16"/>
-					</button>
+					<SongInputControls
+						up-title="Move Line Up"
+						down-title="Move Line Down"
+						copy-title="Duplicate Line"
+						delete-title="Remove Line"
+						v-on:up="song.moveLineUp(sectionIndex, lineIndex)"
+						v-on:down="song.moveLineDown(sectionIndex, lineIndex)"
+						v-on:copy="song.duplicateLine(sectionIndex, lineIndex)"
+						v-on:delete="song.removeLine(sectionIndex, lineIndex)"
+					></SongInputControls>
 				</div>
 				<div v-for="(lyric, lyricIndex) in line" class="row mb-1">
 					<div class="col-sm-2">
 						<input class="form-control form-control-sm" type="text" placeholder="chord" v-model="lyric.chord">
 					</div>
 					<div class="col-sm-10">
-						<div class="input-group">
-							<input class="form-control form-control-sm" type="text" placeholder="lyric" v-model="lyric.text">
-							<button title="Delete Lyric" type="button" class="btn btn-sm btn-dark" v-on:click="song.removeLyric(sectionIndex, lineIndex, lyricIndex)">
-								<Trash size="16"/>
-							</button>
+						<div class="d-flex flex-row">
+							<input class="form-control form-control-sm me-2" type="text" placeholder="lyric" v-model="lyric.text">
+							<SongInputControls
+								up-title="Move Lyric Up"
+								down-title="Move Lyric Down"
+								copy-title="Duplicate Lyric"
+								delete-title="Remove Lyric"
+								v-on:up="song.moveLyricUp(sectionIndex, lineIndex, lyricIndex)"
+								v-on:down="song.moveLyricDown(sectionIndex, lineIndex, lyricIndex)"
+								v-on:copy="song.duplicateLyric(sectionIndex, lineIndex, lyricIndex)"
+								v-on:delete="song.removeLyric(sectionIndex, lineIndex, lyricIndex)"
+							></SongInputControls>
 						</div>
 					</div>
 				</div>
@@ -76,9 +98,9 @@ const input = debounce(() => {
 
 			</div>
 			<div class="d-flex flex-row justify-content-end pt-2 px-2 border-top border-dark">
-					<button title="Insert New Line" type="button" class="btn btn-sm btn-primary" v-on:click="song.addLine(sectionIndex)">
-						<Plus size="16"/>
-					</button>
+				<button title="Insert New Line" type="button" class="btn btn-sm btn-primary" v-on:click="song.addLine(sectionIndex)">
+					<Plus size="16"/>
+				</button>
 			</div>
 
 		</div>
